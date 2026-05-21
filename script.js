@@ -15,40 +15,42 @@ const gameData = {
         "Sykehus", "Polstistasjon", "Ubåt", "Kino", "Passasjerfly", 
         "Piratskip", "Casino", "Barneskole", "Dyrehage", "Romstasjon"
     ],
-    todTruth: [
-        "Hva er den pinligste sangen du har på din mest spilte spilleliste?",
-        "Hvem i rommet ville du overlevd lengst med i en zombie-apokalypse?",
-        "Hva er den verste løgnen du noen gang har fortalt foreldrene dine?",
-        "Hva er din mest uvanlige, irrasjonelle frykt?",
-        "Har du noen gang sniklest andres meldinger? Hvem sine?",
-        "Hva er det dummeste du har kjøpt på nettet midt på natten?",
-        "Hvilken fiktiv karakter var din første store forelskelse?",
-        "Når gråt du sist, og hvorfor?",
-        "Hva er en hemmelighet du aldri har fortalt til noen i dette rommet?",
-        "Hvis du måtte bytte liv med en annen spiller for en dag, hvem ville det vært og hvorfor?",
-        "Hva er din mest kontroversielle mat-mening? (f.eks. ananas på pizza)",
-        "Har du noen gang sendt en melding til feil person og havnet i trøbbel?",
-        "Hva er det mest barnslige du fortsatt gjør regelmessig?",
-        "Hvem i rommet tror du har den dårligste søkehistorikken?",
-        "Hva er det kleineste du har gjort på et jobb- eller skoleintervju?"
-    ],
-    todDare: [
-        "Gjør 10 pushups mens du roper navnet til spilleren til høyre for deg.",
-        "La personen til venstre for deg sende en valgfri emoji til den siste du tekstet med.",
-        "Snakk med en overdreven, oppdiktet dialekt i de neste 3 rundene.",
-        "Gi telefonen din til spilleren overfor deg og la dem se på bildene dine i 30 sekunder.",
-        "Spis en teskje med sennep, ketchup eller hot sauce.",
-        "La gruppen style håret ditt slik de vil, og behold det slik resten av spillet.",
-        "Gjenskap din favoritt-emoji med ansiktet og kroppen, og hold posituren i 10 sekunder.",
-        "Mime en valgfri scene fra en kjent film frem til noen gjetter hvilken det er.",
-        "Drikk et glass vann uten å bruke hendene.",
-        "Stå på ett bein de neste to rundene. Hvis du faller, må du ta en ny nødt.",
-        "La personen til høyre for deg skrive en statusoppdatering på dine sosiale medier.",
-        "Syng alt du har lyst til å si frem til det er din tur igjen.",
-        "Prøv å sleike albuen din. Seriøst, prøv det.",
-        "Gå ut av rommet, kom inn igjen og gjør din mest dramatiske entré noensinne.",
-        "La de andre spillerne stille deg et 'ja eller nei'-spørsmål som du MÅ svare ærlig på."
-    ],
+    
+    todTruth: {
+        mild: [
+            "Hva er den pinligste sangen du har på din mest spilte spilleliste?",
+            "Hvem i rommet ville du overlevd lengst med i en zombie-apokalypse?",
+            "Hva er den verste løgnen du noen gang har fortalt foreldrene dine?",
+            "Hva er din mest uvanlige, irrasjonelle frykt?",
+            "Når gråt du sist, og hvorfor?",
+            "Hva er det dummeste du har kjøpt på nettet midt på natten?"
+        ],
+        spicy: [
+            "Hvem i rommet har du hatt et godt øye til i skjul?",
+            "Hva er det drøyeste du noen gang har gjort på en fest?",
+            "Har du noen gang sniklest andres meldinger? Hvem sine?",
+            "Hvem i rommet tror du har den mørkeste søkehistorikken?",
+            "Hva er en hemmelighet du aldri har fortalt til noen i dette rommet?",
+            "Har du noen gang sendt en flørtende melding til feil person? Fortell!"
+        ]
+    },
+    todDare: {
+        mild: [
+            "Gjør 10 pushups mens du roper navnet til spilleren til høyre for deg.",
+            "Snakk med en overdreven, oppdiktet dialekt i de neste 3 rundene.",
+            "La gruppen style håret ditt slik de vil, og behold det slik resten av spillet.",
+            "Gjenskap din favoritt-emoji med ansiktet og kroppen, og hold posituren i 10 sekunder.",
+            "Stå på ett bein de neste to rundene. Hvis du faller, må du ta en ny nødt."
+        ],
+        spicy: [
+            "La personen til venstre for deg sende en valgfri emoji til den siste du tekstet med.",
+            "Gi telefonen din til spilleren overfor deg og la dem se på bildene dine i 30 sekunder.",
+            "La personen til høyre for deg skrive en statusoppdatering på dine sosiale medier.",
+            "Ring en tilfeldig kontakt i telefonboken og syng 'Gratulerer med dagen' til dem.",
+            "Vis gruppen det sistet bildet du lagret på kamerarullen din, uansett hva det er."
+        ]
+    },
+
     wyr: [
         { opt1: "Alltid ha en stein i skoen", opt2: "Alltid ha våte sokker" },
         { opt1: "Kunne fly (men maks 1 meter over bakken)", opt2: "Være usynlig (men bare når ingen ser på deg)" },
@@ -237,7 +239,7 @@ document.getElementById('btn-imposter-next').addEventListener('click', () => {
 
 
 // ==========================================
-// 6. SPILL: NØDT ELLER SANNHET
+// 6. SPILL: NØDT ELLER SANNHET (Oppdatert)
 // ==========================================
 
 const todPlayerTurn = document.getElementById('tod-player-turn');
@@ -245,16 +247,31 @@ const btnTodDraw = document.getElementById('btn-tod-draw');
 const todChoices = document.getElementById('tod-choices');
 const todResult = document.getElementById('tod-result');
 
+// State for valg av modus
+let currentSpiciness = 'mild';
+
+// Event listeners for modus-knappene
+document.getElementById('btn-mode-mild').addEventListener('click', (e) => {
+    currentSpiciness = 'mild';
+    e.target.classList.add('active');
+    document.getElementById('btn-mode-spicy').classList.remove('active');
+});
+
+document.getElementById('btn-mode-spicy').addEventListener('click', (e) => {
+    currentSpiciness = 'spicy';
+    e.target.classList.add('active');
+    document.getElementById('btn-mode-mild').classList.remove('active');
+});
+
 function initToD() {
     todPlayerTurn.innerText = "Hvem er nestemann?";
-    todPlayerTurn.className = "roulette-text"; // Nullstill klasser
+    todPlayerTurn.className = "roulette-text"; 
     btnTodDraw.classList.remove('hidden');
     todChoices.classList.add('hidden');
     todResult.classList.add('hidden');
 }
 
 btnTodDraw.addEventListener('click', () => {
-    // Hvis vi har for få spillere, gi en advarsel
     if (players.length < 2) {
         alert("Dere må være minst 2 spillere!");
         return;
@@ -264,10 +281,9 @@ btnTodDraw.addEventListener('click', () => {
     todPlayerTurn.classList.add('roulette-active');
     
     let spins = 0;
-    const maxSpins = 20; // Hvor mange ganger navnet bytter før det lander
-    const spinDelay = 100; // Millisekunder mellom hvert navn
+    const maxSpins = 20; 
+    const spinDelay = 100; 
 
-    // Starter rulett-effekten
     const spinInterval = setInterval(() => {
         const randomPlayer = getRandomItem(players);
         todPlayerTurn.innerText = randomPlayer;
@@ -281,18 +297,18 @@ btnTodDraw.addEventListener('click', () => {
 });
 
 function finishRoulette() {
-    // Sørg for at vinneren får et lite ekstra visuelt løft
     todPlayerTurn.className = "roulette-text roulette-winner";
     todPlayerTurn.innerText = `${todPlayerTurn.innerText} sin tur!`;
     
-    // Vis Sannhet/Nødt knappene etter et lite sekund for ekstra spenning
     setTimeout(() => {
         todChoices.classList.remove('hidden');
     }, 500);
 }
 
+// Oppdatert for å trekke fra riktig modus (mild eller spicy)
 function showToDResult(type) {
-    const list = type === 'truth' ? gameData.todTruth : gameData.todDare;
+    const categoryObj = type === 'truth' ? gameData.todTruth : gameData.todDare;
+    const list = categoryObj[currentSpiciness];
     const text = getRandomItem(list);
     
     todChoices.classList.add('hidden');

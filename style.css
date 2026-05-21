@@ -262,3 +262,32 @@ button:active {
     color: var(--accent-pink);
     text-shadow: 0 0 10px rgba(207, 102, 121, 0.5);
 }
+
+
+
+/* --- Spiciness Selector --- */
+.spiciness-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    background-color: var(--surface-color);
+    padding: 5px;
+    border-radius: var(--border-radius);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.mode-btn {
+    flex: 1;
+    margin-bottom: 0;
+    background-color: transparent;
+    color: var(--text-muted);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.mode-btn.active {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    border-color: var(--accent-purple);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
