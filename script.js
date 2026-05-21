@@ -267,6 +267,7 @@ const imposterPlay = document.getElementById('imposter-play-view');
 const imposterTimerView = document.getElementById('imposter-timer-view');
 const flipCard = document.getElementById('imposter-flip-card');
 const flipCardInner = document.getElementById('imposter-card-inner');
+const imposterDuration = document.getElementById('imposter-duration');
 const btnImposterNext = document.getElementById('btn-imposter-next');
 const imposterRoleText = document.getElementById('imposter-role-text');
 const guessSection = document.getElementById('imposter-guess-section');
@@ -285,10 +286,11 @@ function initImposter() {
     guessSection.classList.add('hidden');
     
     document.getElementById('imposter-location-list').innerText = gameData.imposterLocations.join(" • ");
-    
+    imposterDuration.value = imposterDuration.value || '300';
+
     clearInterval(imposterState.timerInterval);
     imposterState.timerInterval = null;
-    imposterState.timeLeft = 300;
+    imposterState.timeLeft = parseInt(imposterDuration.value, 10);
 }
 
 document.getElementById('btn-imposter-start').addEventListener('click', () => {
@@ -297,6 +299,7 @@ document.getElementById('btn-imposter-start').addEventListener('click', () => {
         return;
     }
 
+    imposterState.timeLeft = parseInt(imposterDuration.value, 10) || 300;
     imposterState.currentLocation = getRandomItem(gameData.imposterLocations);
     const imposterIndex = Math.floor(Math.random() * players.length);
     
