@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Selskapsspill Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1 id="header-title">Selskapsspill Hub</h1>
+        <button id="btn-back" class="hidden">Tilbake til Meny</button>
+    </header>
+
+    <main id="app-container">
+        
+        <section id="screen-setup" class="screen active">
+            <h2>Hvem skal spille?</h2>
+            <div class="input-group">
+                <input type="text" id="player-input" placeholder="Skriv inn navn..." autocomplete="off">
+                <button id="btn-add-player" class="btn-primary">Legg til</button>
+            </div>
+            <ul id="player-list"></ul>
+            <button id="btn-start-app" class="btn-success hidden">Klar til å spille!</button>
+        </section>
+
+        <section id="screen-menu" class="screen hidden">
+            <h2>Velg et spill</h2>
+            <div class="menu-grid">
+                <button class="game-card" data-target="screen-imposter">
+                    <h3>🕵️ Imposter</h3>
+                    <p>Finn forræderen blant dere</p>
+                </button>
+                <button class="game-card" data-target="screen-tod">
+                    <h3>🎭 Nødt eller Sannhet</h3>
+                    <p>Klassikeren for de modige</p>
+                </button>
+                <button class="game-card" data-target="screen-wyr">
+                    <h3>⚖️ Would You Rather</h3>
+                    <p>Umulige dilemmaer</p>
+                </button>
+                <button class="game-card" data-target="screen-trivia">
+                    <h3>🧠 Basic Knowledge</h3>
+                    <p>Test allmennkunnskapen</p>
+                </button>
+            </div>
+        </section>
+
+        <section id="screen-imposter" class="screen hidden">
+            <h2>🕵️ Imposter</h2>
+            <div id="imposter-setup-view">
+                <p>Klar for en ny runde? Gi telefonen rundt så alle får se sin rolle.</p>
+                <button id="btn-imposter-start" class="btn-primary">Start Ny Runde</button>
+            </div>
+            <div id="imposter-play-view" class="hidden text-center">
+                <h3 id="imposter-turn-text">Gi telefonen til...</h3>
+                <button id="btn-imposter-reveal" class="btn-warning">Vis min rolle</button>
+                <div id="imposter-role-display" class="hidden">
+                    <p id="imposter-role-text" class="large-text"></p>
+                    <button id="btn-imposter-next" class="btn-danger">Skjul og gi videre</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="screen-tod" class="screen hidden text-center">
+            <h2>🎭 Nødt eller Sannhet</h2>
+            <h3 id="tod-player-turn">Trykk for å trekke spiller</h3>
+            <button id="btn-tod-draw" class="btn-primary">Trekk Spiller</button>
+            
+            <div id="tod-choices" class="hidden">
+                <button id="btn-truth" class="btn-success">Sannhet</button>
+                <button id="btn-dare" class="btn-danger">Nødt</button>
+            </div>
+            <div id="tod-result" class="hidden">
+                <p id="tod-result-text" class="large-text"></p>
+                <button id="btn-tod-next" class="btn-primary">Neste Spiller</button>
+            </div>
+        </section>
+
+        <section id="screen-wyr" class="screen hidden text-center">
+            <h2>⚖️ Would You Rather</h2>
+            <p>Hva velger gruppen?</p>
+            <div class="wyr-container">
+                <div id="wyr-opt1" class="wyr-box bg-blue">Valg 1</div>
+                <div class="wyr-or">ELLER</div>
+                <div id="wyr-opt2" class="wyr-box bg-pink">Valg 2</div>
+            </div>
+            <button id="btn-wyr-next" class="btn-primary">Neste Dilemma</button>
+        </section>
+
+        <section id="screen-trivia" class="screen hidden text-center">
+            <h2>🧠 Basic Knowledge Trivia</h2>
+            <div class="trivia-card">
+                <p id="trivia-question" class="large-text">Spørsmål dukker opp her</p>
+                <button id="btn-trivia-reveal" class="btn-warning">Vis Svar</button>
+                <p id="trivia-answer" class="large-text hidden text-success"></p>
+            </div>
+            <button id="btn-trivia-next" class="btn-primary mt-2">Neste Spørsmål</button>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

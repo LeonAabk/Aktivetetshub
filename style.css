@@ -1,0 +1,231 @@
+/* --- CSS Variabler for Dark Mode App-design --- */
+:root {
+    --bg-color: #121212;
+    --surface-color: #1e1e1e;
+    --text-main: #f5f5f5;
+    --text-muted: #a0a0a0;
+    
+    --accent-purple: #bb86fc;
+    --accent-blue: #03dac6;
+    --accent-pink: #cf6679;
+    --accent-green: #4caf50;
+    --accent-warning: #ffb74d;
+    
+    --border-radius: 12px;
+    --transition-speed: 0.3s;
+}
+
+/* --- Resets og Base Styles --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-tap-highlight-color: transparent; /* Fjerner blå klikk-boks på mobil */
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* --- Header --- */
+header {
+    background-color: var(--surface-color);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    z-index: 10;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    color: var(--accent-purple);
+}
+
+#btn-back {
+    position: absolute;
+    left: 15px;
+    background: none;
+    border: none;
+    color: var(--accent-blue);
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* --- Hovedkontainer & SPA Logikk --- */
+#app-container {
+    flex: 1;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.screen {
+    display: none;
+    animation: fadeIn var(--transition-speed) ease-in-out;
+}
+
+.screen.active {
+    display: block;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- Animasjoner --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Typografi og Hjelpeklasser --- */
+h2 { margin-bottom: 15px; color: var(--text-main); text-align: center; }
+p { margin-bottom: 15px; color: var(--text-muted); }
+.text-center { text-align: center; }
+.large-text { font-size: 1.5rem; font-weight: bold; margin: 20px 0; color: var(--text-main); }
+.text-success { color: var(--accent-green) !important; }
+.mt-2 { margin-top: 20px; }
+
+/* --- Skjemaer og Spillere --- */
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 12px;
+    border-radius: var(--border-radius);
+    border: 1px solid #333;
+    background-color: var(--surface-color);
+    color: var(--text-main);
+    font-size: 1rem;
+    outline: none;
+}
+
+input[type="text"]:focus {
+    border-color: var(--accent-purple);
+}
+
+#player-list {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+#player-list li {
+    background-color: var(--surface-color);
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    animation: fadeIn 0.2s ease-in;
+}
+
+.remove-player {
+    color: var(--accent-pink);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* --- Knapper --- */
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.2s;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+.btn-primary { background-color: var(--accent-purple); color: #000; }
+.btn-success { background-color: var(--accent-green); color: #000; }
+.btn-danger { background-color: var(--accent-pink); color: #000; }
+.btn-warning { background-color: var(--accent-warning); color: #000; }
+
+/* --- Meny Grid --- */
+.menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.game-card {
+    background-color: var(--surface-color);
+    color: var(--text-main);
+    padding: 20px 10px;
+    text-align: center;
+    border-radius: var(--border-radius);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.game-card h3 { font-size: 1.2rem; margin-bottom: 8px; }
+.game-card p { font-size: 0.8rem; margin: 0; }
+.game-card:hover { border: 1px solid var(--accent-purple); }
+
+/* --- Would You Rather Styles --- */
+.wyr-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.wyr-box {
+    padding: 40px 20px;
+    border-radius: var(--border-radius);
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #000;
+}
+
+.bg-blue { background-color: var(--accent-blue); }
+.bg-pink { background-color: var(--accent-pink); }
+
+.wyr-or {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--surface-color);
+    padding: 10px;
+    border-radius: 50%;
+    font-weight: bold;
+    border: 3px solid var(--bg-color);
+}
+
+/* --- Trivia Styles --- */
+.trivia-card {
+    background-color: var(--surface-color);
+    padding: 30px 20px;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 400px) {
+    .menu-grid { grid-template-columns: 1fr; }
+}
