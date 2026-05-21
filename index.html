@@ -43,6 +43,30 @@
                     <h3>🧠 Basic Knowledge</h3>
                     <p>Test allmennkunnskapen</p>
                 </button>
+                <button class="game-card" data-target="screen-challenge">
+                    <h3>🔥 Party Challenge</h3>
+                    <p>Rask og morsom utfordring</p>
+                </button>
+                <button class="game-card" data-target="screen-emoji">
+                    <h3>🎭 Emoji Quiz</h3>
+                    <p>Gjett ordet bak emojiene</p>
+            <section id="screen-challenge" class="screen hidden text-center">
+                <h2>🔥 Party Challenge</h2>
+                <div class="challenge-card">
+                    <p id="challenge-text" class="large-text">Klar for en utfordring?</p>
+                </div>
+                <button id="btn-challenge-next" class="btn-primary">Gi meg en ny utfordring</button>
+            </section>
+            <section id="screen-emoji" class="screen hidden text-center">
+                <h2>🎭 Emoji Quiz</h2>
+                <div class="emoji-card">
+                    <p id="emoji-question" class="large-text">Emojier kommer her</p>
+                    <button id="btn-emoji-reveal" class="btn-warning">Vis svar</button>
+                    <p id="emoji-answer" class="large-text hidden text-success"></p>
+                </div>
+                <button id="btn-emoji-next" class="btn-primary mt-2">Neste emoji</button>
+            </section>
+                </button>
             </div>
         </section>
 
@@ -153,6 +177,24 @@
                 <p id="trivia-answer" class="large-text hidden text-success"></p>
             </div>
             <button id="btn-trivia-next" class="btn-primary mt-2">Neste Spørsmål</button>
+        </section>
+
+        <section id="screen-challenge" class="screen hidden text-center">
+            <h2>🔥 Party Challenge</h2>
+            <div class="challenge-card">
+                <p id="challenge-text" class="large-text">Klar for en utfordring?</p>
+            </div>
+            <button id="btn-challenge-next" class="btn-primary">Gi meg en ny utfordring</button>
+        </section>
+
+        <section id="screen-emoji" class="screen hidden text-center">
+            <h2>🎭 Emoji Quiz</h2>
+            <div class="emoji-card">
+                <p id="emoji-question" class="large-text">Emojier kommer her</p>
+                <button id="btn-emoji-reveal" class="btn-warning">Vis svar</button>
+                <p id="emoji-answer" class="large-text hidden text-success"></p>
+            </div>
+            <button id="btn-emoji-next" class="btn-primary mt-2">Neste emoji</button>
         </section>
 
     </main>

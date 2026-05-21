@@ -26,6 +26,8 @@
 
 body {
     background-color: var(--bg-color);
+    background-image: radial-gradient(circle at top left, rgba(3, 218, 198, 0.18), transparent 22%),
+                      radial-gradient(circle at bottom right, rgba(187, 134, 252, 0.18), transparent 18%);
     color: var(--text-main);
     display: flex;
     flex-direction: column;
@@ -36,6 +38,7 @@ body {
 /* --- Header --- */
 header {
     background-color: var(--surface-color);
+    background-image: linear-gradient(135deg, rgba(43, 41, 55, 0.98), rgba(30, 30, 38, 0.95));
     padding: 20px;
     display: flex;
     justify-content: center;
@@ -151,10 +154,14 @@ button {
     transition: transform 0.1s, opacity 0.2s;
     width: 100%;
     margin-bottom: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 button:active {
     transform: scale(0.97);
+}
+button:hover {
+    transform: translateY(-1px) scale(1.01);
 }
 
 .btn-primary { background-color: var(--accent-purple); color: #000; }
@@ -165,7 +172,7 @@ button:active {
 /* --- Meny Grid --- */
 .menu-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 15px;
 }
 
@@ -179,11 +186,19 @@ button:active {
     flex-direction: column;
     justify-content: center;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(8px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .game-card h3 { font-size: 1.2rem; margin-bottom: 8px; }
 .game-card p { font-size: 0.8rem; margin: 0; }
 .game-card:hover { border: 1px solid var(--accent-purple); }
+.game-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.22);
+    border-color: var(--accent-pink);
+}
 
 /* --- Would You Rather Styles --- */
 .wyr-container {
@@ -223,11 +238,34 @@ button:active {
     padding: 30px 20px;
     border-radius: var(--border-radius);
     margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.14);
+}
+
+.challenge-card,
+.emoji-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.12));
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 30px 20px;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.challenge-card:hover,
+.emoji-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(187, 134, 252, 0.4);
 }
 
 /* Mobile adjustments */
 @media (max-width: 400px) {
     .menu-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px) {
+    .menu-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 

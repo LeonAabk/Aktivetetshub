@@ -135,6 +135,28 @@ const gameData = {
         { q: "Hvem malte Mona Lisa?", a: "Leonardo da Vinci" },
         { q: "Hvilket grunnstoff har kjemisk symbol 'O'?", a: "Oksygen" }
     ]
+    ,
+    partyChallenges: [
+        "Fortell om ditt villeste øyeblikk på fest.",
+        "Mime en kjent film i 20 sekunder.",
+        "Bytt plass med personen til venstre i én runde.",
+        "Si alfabetet baklengs så raskt du kan.",
+        "Lag det mest overbevisende skrekkfjeset du klarer.",
+        "Syng en kjent melodi kun med lyden 'la'.",
+        "Hold pusten mens du sier en morsom vits.",
+        "Lat som du er en kjendis som signerer autografer.",
+        "Fortell gruppen en hemmelighet ingen vet.",
+        "Gjør et kort dansenummer uten musikk."
+    ],
+    emojiQuiz: [
+        { emoji: "🌧️☔️🌈", answer: "Regnbue etter regn" },
+        { emoji: "🍕🎬❤️", answer: "Pizza og filmkveld" },
+        { emoji: "🐶🎾", answer: "Hund leker med ball" },
+        { emoji: "🍎📚", answer: "Skole eller lekser" },
+        { emoji: "🎂🎁🎉", answer: "Bursdagsfest" },
+        { emoji: "🚗💨", answer: "Bil kjører fort" },
+        { emoji: "☕️📖", answer: "Kaffe og bok" }
+    ]
 };
 
 // ==========================================
@@ -180,6 +202,8 @@ document.querySelectorAll('.game-card').forEach(card => {
         if(target === 'screen-tod') initToD();
         if(target === 'screen-wyr') loadNextWYR();
         if(target === 'screen-trivia') loadNextTrivia();
+        if(target === 'screen-challenge') initChallenge();
+        if(target === 'screen-emoji') loadNextEmoji();
     });
 });
 
@@ -503,6 +527,32 @@ document.getElementById('btn-tod-next').addEventListener('click', initToD);
 // ==========================================
 // 7. SPILL: BASIC KNOWLEDGE / TRIVIA
 // ==========================================
+
+const challengeText = document.getElementById('challenge-text');
+const btnChallengeNext = document.getElementById('btn-challenge-next');
+const emojiQuestion = document.getElementById('emoji-question');
+const emojiAnswer = document.getElementById('emoji-answer');
+const btnEmojiReveal = document.getElementById('btn-emoji-reveal');
+const btnEmojiNext = document.getElementById('btn-emoji-next');
+
+function initChallenge() {
+    challengeText.innerText = getRandomItem(gameData.partyChallenges);
+}
+
+function loadNextEmoji() {
+    const item = getRandomItem(gameData.emojiQuiz);
+    emojiQuestion.innerText = item.emoji;
+    emojiAnswer.innerText = item.answer;
+    emojiAnswer.classList.add('hidden');
+    btnEmojiReveal.classList.remove('hidden');
+}
+
+btnChallengeNext.addEventListener('click', initChallenge);
+btnEmojiReveal.addEventListener('click', () => {
+    emojiAnswer.classList.remove('hidden');
+    btnEmojiReveal.classList.add('hidden');
+});
+btnEmojiNext.addEventListener('click', loadNextEmoji);
 
 const triviaQuestion = document.getElementById('trivia-question');
 const triviaAnswer = document.getElementById('trivia-answer');
