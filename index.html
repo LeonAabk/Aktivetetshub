@@ -76,13 +76,28 @@
             </div>
 
             <div id="imposter-timer-view" class="hidden">
-                <h3 style="color: var(--accent-warning);">Tid for å avsløre forræderen!</h3>
-                <p>Still hverandre spørsmål om stedet.</p>
+                <h3 style="color: var(--accent-warning);">Tid for diskusjon!</h3>
+                <p>Mistenker dere noen? Eller vet Imposteren hvor dere er?</p>
+                
                 <div id="imposter-timer" style="font-size: 3rem; font-weight: bold; margin: 20px 0;">05:00</div>
                 <button id="btn-imposter-timer-toggle" class="btn-success">Start / Pause</button>
-                <button id="btn-imposter-end" class="btn-danger mt-2">Avslutt runde</button>
+                
+                <hr style="border-color: #333; margin: 20px 0;">
+                
+                <button id="btn-imposter-wants-guess" class="btn-warning">🚨 Imposteren vil gjette stedet!</button>
+                
+                <div id="imposter-guess-section" class="hidden mt-2">
+                    <p>Hvis Imposteren gjetter riktig, vinner hen! Feil gjett = tap.</p>
+                    <select id="imposter-location-select" class="form-select"></select>
+                    <button id="btn-imposter-submit-guess" class="btn-danger mt-2">Gjett og avslutt runde</button>
+                </div>
+
+                <button id="btn-imposter-end" class="btn-primary mt-2">Avslutt runde normalt</button>
             </div>
         </section>
+
+ 
+        
 
        <section id="screen-tod" class="screen hidden text-center">
             <h2>🎭 Nødt eller Sannhet</h2>
@@ -108,16 +123,16 @@
                 <button id="btn-tod-next" class="btn-primary">Neste Spiller</button>
             </div>
         </section>
-
+        
         <section id="screen-wyr" class="screen hidden text-center">
             <h2>⚖️ Would You Rather</h2>
-            <p>Hva velger gruppen?</p>
+            <p>Trykk på det alternativet du velger!</p>
             <div class="wyr-container">
-                <div id="wyr-opt1" class="wyr-box bg-blue">Valg 1</div>
+                <div id="wyr-opt1" class="wyr-box bg-blue interactive-box">Valg 1</div>
                 <div class="wyr-or">ELLER</div>
-                <div id="wyr-opt2" class="wyr-box bg-pink">Valg 2</div>
+                <div id="wyr-opt2" class="wyr-box bg-pink interactive-box">Valg 2</div>
             </div>
-            <button id="btn-wyr-next" class="btn-primary">Neste Dilemma</button>
+            <button id="btn-wyr-next" class="btn-primary hidden">Neste Dilemma</button>
         </section>
 
         <section id="screen-trivia" class="screen hidden text-center">

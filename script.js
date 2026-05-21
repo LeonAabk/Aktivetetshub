@@ -111,10 +111,20 @@ const gameData = {
     // --- WOULD YOU RATHER DATA ---
     wyr: [
         { opt1: "Alltid ha en stein i skoen", opt2: "Alltid ha våte sokker" },
-        { opt1: "Kunne fly (men maks 1 meter over bakken)", opt2: "Være usynlig (men bare når ingen ser på deg)" },
-        { opt1: "Alltid måtte hviske", opt2: "Alltid måtte rope" },
+        { opt1: "Kunne fly (maks 1 meter over bakken)", opt2: "Være usynlig (bare når ingen ser på deg)" },
+        { opt1: "Måtte hviske alt du sier", opt2: "Måtte rope alt du sier" },
         { opt1: "Spise pizza med ananas resten av livet", opt2: "Aldri spise pizza igjen" },
-        { opt1: "Ha fingre som ben", opt2: "Ha ben som fingre" }
+        { opt1: "Ha fingre som ben", opt2: "Ha ben som fingre" },
+        { opt1: "Bli angrepet av én hest på størrelse med en and", opt2: "Bli angrepet av 100 ender på størrelse med hester" },
+        { opt1: "Alltid komme 10 minutter for sent til alt", opt2: "Alltid komme 20 minutter for tidlig til alt" },
+        { opt1: "Ha ubegrenset med penger, men ingen venner", opt2: "Være fattig, men ha fantastiske venner" },
+        { opt1: "Miste evnen til å lyve", opt2: "Tro på alt alle sier til deg" },
+        { opt1: "Aldri mer kunne bruke internett", opt2: "Aldri mer kunne forlate hjembyen din" },
+        { opt1: "Ha en knapp som spoler tiden frem", opt2: "Ha en knapp som setter tiden på pause" },
+        { opt1: "Ha maur kravlende på armen din for alltid", opt2: "Alltid ha følelsen av et hårstrå i munnen" },
+        { opt1: "Gjenoppleve den samme dagen om og om igjen", opt2: "Leve et liv der du aldri husker hva du gjorde i går" },
+        { opt1: "Finne ekte kjærlighet", opt2: "Vinne 100 millioner i lotto" },
+        { opt1: "Kunne snakke alle språk flytende", opt2: "Kunne snakke med dyr" }
     ],
     
     // --- TRIVIA DATA ---
@@ -242,13 +252,14 @@ function getRandomItem(array) {
 
 
 // ==========================================
-// 5. SPILL: IMPOSTER (Oppdatert)
+// 5. SPILL: IMPOSTER
 // ==========================================
 let imposterState = { 
     currentPlayerIndex: 0, 
     roles: [],
     timerInterval: null,
-    timeLeft: 300 // 5 minutter i sekunder
+    timeLeft: 300,
+    currentLocation: "" // Ny state for å huske stedet
 };
 
 const imposterSetup = document.getElementById('imposter-setup-view');
@@ -257,17 +268,17 @@ const imposterTimerView = document.getElementById('imposter-timer-view');
 const flipCard = document.getElementById('imposter-flip-card');
 const btnImposterNext = document.getElementById('btn-imposter-next');
 const imposterRoleText = document.getElementById('imposter-role-text');
+const guessSection = document.getElementById('imposter-guess-section');
+const locationSelect = document.getElementById('imposter-location-select');
 
 function initImposter() {
-    // Nullstill views
     imposterSetup.classList.remove('hidden');
     imposterPlay.classList.add('hidden');
     imposterTimerView.classList.add('hidden');
+    guessSection.classList.add('hidden');
     
-    // Vis alle mulige lokasjoner i UI så Imposteren kan pugge litt
     document.getElementById('imposter-location-list').innerText = gameData.imposterLocations.join(" • ");
     
-    // Stopp eventuell timer
     clearInterval(imposterState.timerInterval);
     imposterState.timerInterval = null;
     imposterState.timeLeft = 300;
@@ -279,14 +290,14 @@ document.getElementById('btn-imposter-start').addEventListener('click', () => {
         return;
     }
 
-    const location = getRandomItem(gameData.imposterLocations);
+    imposterState.currentLocation = getRandomItem(gameData.imposterLocations);
     const imposterIndex = Math.floor(Math.random() * players.length);
     
     imposterState.roles = players.map((player, i) => {
         if (i === imposterIndex) {
-            return { name: player, isImposter: true, text: `<span class="imposter-red">Du er IMPOSTER!</span><br><br><span class="small-text">Prøv å gjett hvor dere er basert på spørsmålene de andre stiller.</span>` };
+            return { name: player, isImposter: true, text: `<span class="imposter-red">Du er IMPOSTER!</span><br><br><span class="small-text">Prøv å gjett hvor dere er.</span>` };
         } else {
-            return { name: player, isImposter: false, text: `Stedet er:<br><span class="imposter-green" style="font-size: 1.5rem; font-weight: bold;">${location}</span><br><br><span class="small-text">Avslør Imposteren!</span>` };
+            return { name: player, isImposter: false, text: `Stedet er:<br><span class="imposter-green" style="font-size: 1.5rem; font-weight: bold;">${imposterState.currentLocation}</span>` };
         }
     });
     
@@ -299,7 +310,6 @@ document.getElementById('btn-imposter-start').addEventListener('click', () => {
 });
 
 function updateImposterTurn() {
-    // Sørg for at kortet alltid er skjult når det gis til neste spiller
     flipCard.classList.remove('flipped');
     btnImposterNext.classList.add('hidden');
 
@@ -313,7 +323,6 @@ function updateImposterTurn() {
     imposterRoleText.innerHTML = currentPlayer.text;
 }
 
-// Snu-kortet logikk
 flipCard.addEventListener('click', () => {
     if (!flipCard.classList.contains('flipped')) {
         flipCard.classList.add('flipped');
@@ -326,11 +335,21 @@ btnImposterNext.addEventListener('click', () => {
     updateImposterTurn();
 });
 
-// Timer Logikk
+// Timer og Gjetting
 function startImposterTimerPhase() {
     imposterPlay.classList.add('hidden');
     imposterTimerView.classList.remove('hidden');
     updateTimerDisplay();
+
+    // Fyll dropdown med steder sortert alfabetisk
+    locationSelect.innerHTML = "";
+    const sortedLocations = [...gameData.imposterLocations].sort();
+    sortedLocations.forEach(loc => {
+        const option = document.createElement('option');
+        option.value = loc;
+        option.innerText = loc;
+        locationSelect.appendChild(option);
+    });
 }
 
 function updateTimerDisplay() {
@@ -342,13 +361,11 @@ function updateTimerDisplay() {
 
 document.getElementById('btn-imposter-timer-toggle').addEventListener('click', (e) => {
     if (imposterState.timerInterval) {
-        // Sett på pause
         clearInterval(imposterState.timerInterval);
         imposterState.timerInterval = null;
         e.target.innerText = "Start";
         e.target.classList.replace('btn-warning', 'btn-success');
     } else {
-        // Start
         e.target.innerText = "Pause";
         e.target.classList.replace('btn-success', 'btn-warning');
         imposterState.timerInterval = setInterval(() => {
@@ -360,6 +377,26 @@ document.getElementById('btn-imposter-timer-toggle').addEventListener('click', (
             }
         }, 1000);
     }
+});
+
+// Avslører gjette-panelet
+document.getElementById('btn-imposter-wants-guess').addEventListener('click', () => {
+    guessSection.classList.remove('hidden');
+    // Pauser timeren automatisk
+    if (imposterState.timerInterval) {
+        document.getElementById('btn-imposter-timer-toggle').click();
+    }
+});
+
+// Håndterer gjettingen
+document.getElementById('btn-imposter-submit-guess').addEventListener('click', () => {
+    const guessedLocation = locationSelect.value;
+    if (guessedLocation === imposterState.currentLocation) {
+        alert(`🚨 RIKTIG! Stedet var ${imposterState.currentLocation}. Imposteren vinner!`);
+    } else {
+        alert(`❌ FEIL! Stedet var ${imposterState.currentLocation}. Imposteren tapte!`);
+    }
+    initImposter(); // Reset etter ferdig runde
 });
 
 document.getElementById('btn-imposter-end').addEventListener('click', initImposter);
@@ -447,38 +484,37 @@ document.getElementById('btn-dare').addEventListener('click', () => showToDResul
 
 document.getElementById('btn-tod-next').addEventListener('click', initToD);
 
-
 // ==========================================
 // 7. SPILL: WOULD YOU RATHER
 // ==========================================
 
+const opt1Box = document.getElementById('wyr-opt1');
+const opt2Box = document.getElementById('wyr-opt2');
+const btnWyrNext = document.getElementById('btn-wyr-next');
+
 function loadNextWYR() {
     const dilemma = getRandomItem(gameData.wyr);
-    document.getElementById('wyr-opt1').innerText = dilemma.opt1;
-    document.getElementById('wyr-opt2').innerText = dilemma.opt2;
-}
-
-document.getElementById('btn-wyr-next').addEventListener('click', loadNextWYR);
-
-
-// ==========================================
-// 8. SPILL: BASIC KNOWLEDGE TRIVIA
-// ==========================================
-
-let currentTrivia = {};
-
-function loadNextTrivia() {
-    currentTrivia = getRandomItem(gameData.trivia);
-    document.getElementById('trivia-question').innerText = currentTrivia.q;
-    document.getElementById('trivia-answer').innerText = currentTrivia.a;
+    opt1Box.innerText = dilemma.opt1;
+    opt2Box.innerText = dilemma.opt2;
     
-    document.getElementById('trivia-answer').classList.add('hidden');
-    document.getElementById('btn-trivia-reveal').classList.remove('hidden');
+    // Nullstill klasser
+    opt1Box.className = "wyr-box bg-blue interactive-box";
+    opt2Box.className = "wyr-box bg-pink interactive-box";
+    btnWyrNext.classList.add('hidden');
 }
 
-document.getElementById('btn-trivia-reveal').addEventListener('click', () => {
-    document.getElementById('trivia-answer').classList.remove('hidden');
-    document.getElementById('btn-trivia-reveal').classList.add('hidden');
-});
+// Håndter klikk på valgene
+function handleWyrChoice(selectedBox, otherBox) {
+    selectedBox.classList.add('selected');
+    selectedBox.classList.remove('dimmed');
+    otherBox.classList.add('dimmed');
+    otherBox.classList.remove('selected');
+    
+    // Vis neste-knapp etter et valg er tatt
+    btnWyrNext.classList.remove('hidden');
+}
 
-document.getElementById('btn-trivia-next').addEventListener('click', loadNextTrivia);
+opt1Box.addEventListener('click', () => handleWyrChoice(opt1Box, opt2Box));
+opt2Box.addEventListener('click', () => handleWyrChoice(opt2Box, opt1Box));
+
+btnWyrNext.addEventListener('click', loadNextWYR);
