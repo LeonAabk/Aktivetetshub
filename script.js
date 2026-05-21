@@ -310,8 +310,9 @@ document.getElementById('btn-imposter-start').addEventListener('click', () => {
 });
 
 function updateImposterTurn() {
-    flipCard.classList.remove('flipped');
     btnImposterNext.classList.add('hidden');
+    flipCard.style.visibility = 'hidden';
+    flipCard.classList.remove('flipped');
 
     if (imposterState.currentPlayerIndex >= imposterState.roles.length) {
         startImposterTimerPhase();
@@ -320,7 +321,11 @@ function updateImposterTurn() {
 
     const currentPlayer = imposterState.roles[imposterState.currentPlayerIndex];
     document.getElementById('imposter-turn-text').innerText = `Gi telefonen til ${currentPlayer.name}`;
-    imposterRoleText.innerHTML = currentPlayer.text;
+
+    window.requestAnimationFrame(() => {
+        imposterRoleText.innerHTML = currentPlayer.text;
+        flipCard.style.visibility = '';
+    });
 }
 
 flipCard.addEventListener('click', () => {
@@ -485,7 +490,32 @@ document.getElementById('btn-dare').addEventListener('click', () => showToDResul
 document.getElementById('btn-tod-next').addEventListener('click', initToD);
 
 // ==========================================
-// 7. SPILL: WOULD YOU RATHER
+// 7. SPILL: BASIC KNOWLEDGE / TRIVIA
+// ==========================================
+
+const triviaQuestion = document.getElementById('trivia-question');
+const triviaAnswer = document.getElementById('trivia-answer');
+const btnTriviaReveal = document.getElementById('btn-trivia-reveal');
+const btnTriviaNext = document.getElementById('btn-trivia-next');
+
+function loadNextTrivia() {
+    const item = getRandomItem(gameData.trivia);
+    triviaQuestion.innerText = item.q;
+    triviaAnswer.innerText = item.a;
+    triviaAnswer.classList.add('hidden');
+    btnTriviaReveal.classList.remove('hidden');
+    btnTriviaNext.classList.remove('hidden');
+}
+
+btnTriviaReveal.addEventListener('click', () => {
+    triviaAnswer.classList.remove('hidden');
+    btnTriviaReveal.classList.add('hidden');
+});
+
+btnTriviaNext.addEventListener('click', loadNextTrivia);
+
+// ==========================================
+// 8. SPILL: WOULD YOU RATHER
 // ==========================================
 
 const opt1Box = document.getElementById('wyr-opt1');
