@@ -62,15 +62,20 @@
             </div>
         </section>
 
-        <section id="screen-tod" class="screen hidden text-center">
+       <section id="screen-tod" class="screen hidden text-center">
             <h2>🎭 Nødt eller Sannhet</h2>
-            <h3 id="tod-player-turn">Trykk for å trekke spiller</h3>
+            
+            <div id="tod-roulette-container">
+                <h3 id="tod-player-turn" class="roulette-text">Er dere klare?</h3>
+            </div>
+            
             <button id="btn-tod-draw" class="btn-primary">Trekk Spiller</button>
             
             <div id="tod-choices" class="hidden">
                 <button id="btn-truth" class="btn-success">Sannhet</button>
                 <button id="btn-dare" class="btn-danger">Nødt</button>
             </div>
+            
             <div id="tod-result" class="hidden">
                 <p id="tod-result-text" class="large-text"></p>
                 <button id="btn-tod-next" class="btn-primary">Neste Spiller</button>
