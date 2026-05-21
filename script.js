@@ -266,10 +266,17 @@ const imposterSetup = document.getElementById('imposter-setup-view');
 const imposterPlay = document.getElementById('imposter-play-view');
 const imposterTimerView = document.getElementById('imposter-timer-view');
 const flipCard = document.getElementById('imposter-flip-card');
+const flipCardInner = document.getElementById('imposter-card-inner');
 const btnImposterNext = document.getElementById('btn-imposter-next');
 const imposterRoleText = document.getElementById('imposter-role-text');
 const guessSection = document.getElementById('imposter-guess-section');
 const locationSelect = document.getElementById('imposter-location-select');
+
+flipCardInner.addEventListener('transitionend', (e) => {
+    if (e.propertyName === 'transform' && !flipCard.classList.contains('flipped')) {
+        flipCard.style.visibility = '';
+    }
+});
 
 function initImposter() {
     imposterSetup.classList.remove('hidden');
@@ -311,6 +318,7 @@ document.getElementById('btn-imposter-start').addEventListener('click', () => {
 
 function updateImposterTurn() {
     btnImposterNext.classList.add('hidden');
+    const wasFlipped = flipCard.classList.contains('flipped');
     flipCard.style.visibility = 'hidden';
     flipCard.classList.remove('flipped');
 
@@ -321,11 +329,11 @@ function updateImposterTurn() {
 
     const currentPlayer = imposterState.roles[imposterState.currentPlayerIndex];
     document.getElementById('imposter-turn-text').innerText = `Gi telefonen til ${currentPlayer.name}`;
+    imposterRoleText.innerHTML = currentPlayer.text;
 
-    window.requestAnimationFrame(() => {
-        imposterRoleText.innerHTML = currentPlayer.text;
+    if (!wasFlipped) {
         flipCard.style.visibility = '';
-    });
+    }
 }
 
 flipCard.addEventListener('click', () => {
