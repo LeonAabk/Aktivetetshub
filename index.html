@@ -46,19 +46,41 @@
             </div>
         </section>
 
-        <section id="screen-imposter" class="screen hidden">
+        <section id="screen-imposter" class="screen hidden text-center">
             <h2>🕵️ Imposter</h2>
+            
             <div id="imposter-setup-view">
-                <p>Klar for en ny runde? Gi telefonen rundt så alle får se sin rolle.</p>
+                <p>Gi telefonen rundt. Imposteren må bløffe, resten må finne forræderen!</p>
                 <button id="btn-imposter-start" class="btn-primary">Start Ny Runde</button>
-            </div>
-            <div id="imposter-play-view" class="hidden text-center">
-                <h3 id="imposter-turn-text">Gi telefonen til...</h3>
-                <button id="btn-imposter-reveal" class="btn-warning">Vis min rolle</button>
-                <div id="imposter-role-display" class="hidden">
-                    <p id="imposter-role-text" class="large-text"></p>
-                    <button id="btn-imposter-next" class="btn-danger">Skjul og gi videre</button>
+                <div class="mt-2">
+                    <h4 style="color: var(--accent-blue); margin-bottom: 5px;">Mulige steder:</h4>
+                    <p id="imposter-location-list" class="small-text"></p>
                 </div>
+            </div>
+
+            <div id="imposter-play-view" class="hidden">
+                <h3 id="imposter-turn-text" class="large-text">Gi telefonen til...</h3>
+                
+                <div class="flip-card" id="imposter-flip-card">
+                    <div class="flip-card-inner" id="imposter-card-inner">
+                        <div class="flip-card-front">
+                            <p>Trykk for å se rollen din</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <p id="imposter-role-text" class="large-text"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btn-imposter-next" class="btn-danger hidden mt-2">Skjul og gi videre</button>
+            </div>
+
+            <div id="imposter-timer-view" class="hidden">
+                <h3 style="color: var(--accent-warning);">Tid for å avsløre forræderen!</h3>
+                <p>Still hverandre spørsmål om stedet.</p>
+                <div id="imposter-timer" style="font-size: 3rem; font-weight: bold; margin: 20px 0;">05:00</div>
+                <button id="btn-imposter-timer-toggle" class="btn-success">Start / Pause</button>
+                <button id="btn-imposter-end" class="btn-danger mt-2">Avslutt runde</button>
             </div>
         </section>
 

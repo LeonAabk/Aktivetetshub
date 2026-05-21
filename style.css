@@ -291,3 +291,62 @@ button:active {
     border-color: var(--accent-purple);
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
+
+/* --- Imposter UX --- */
+.small-text {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.flip-card {
+    background-color: transparent;
+    width: 100%;
+    height: 200px;
+    perspective: 1000px; /* Gir 3D-dybde */
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    padding: 20px;
+}
+
+.flip-card-front {
+    background-color: var(--surface-color);
+    border: 2px dashed var(--accent-blue);
+    color: var(--accent-blue);
+    font-weight: bold;
+}
+
+.flip-card-back {
+    background-color: var(--surface-color);
+    border: 2px solid var(--accent-purple);
+    transform: rotateY(180deg);
+}
+
+.imposter-red { color: var(--accent-pink); font-size: 1.8rem; font-weight: bold; }
+.imposter-green { color: var(--accent-green); }

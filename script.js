@@ -9,13 +9,17 @@
 
 let players = [];
 
-// Mock-data. Her kan du legge til hundrevis av dine egne strings/objekter senere.
+// Mock-data. Her kan du fortsette å legge til hundrevis av dine egne strings/objekter senere.
 const gameData = {
     imposterLocations: [
-        "Sykehus", "Polstistasjon", "Ubåt", "Kino", "Passasjerfly", 
-        "Piratskip", "Casino", "Barneskole", "Dyrehage", "Romstasjon"
+        "Sykehus", "Politistasjon", "Ubåt", "Kino", "Passasjerfly", 
+        "Piratskip", "Casino", "Barneskole", "Dyrehage", "Romstasjon",
+        "Rockekonsert", "Fangehull", "Luksushotell", "Spøkelseshus", 
+        "Sirkus", "Sjokoladefabrikk", "Militærbase", "Cruise-skip",
+        "Fotballstadion", "Bibliotek", "Nattklubb", "IKEA", "Spa/Velværesenter"
     ],
     
+    // --- NØDT ELLER SANNHET DATA ---
     todTruth: {
         mild: [
             "Hva er den pinligste sangen du har på din mest spilte spilleliste?",
@@ -23,15 +27,39 @@ const gameData = {
             "Hva er den verste løgnen du noen gang har fortalt foreldrene dine?",
             "Hva er din mest uvanlige, irrasjonelle frykt?",
             "Når gråt du sist, og hvorfor?",
-            "Hva er det dummeste du har kjøpt på nettet midt på natten?"
+            "Hva er det dummeste du har kjøpt på nettet midt på natten?",
+            "Hvilken fiktiv karakter var din første store forelskelse?",
+            "Hva er ditt pinligste kallenavn fra barndommen?",
+            "Har du noen gang latet som du kjente noen for å slippe unna en klein situasjon?",
+            "Hva er det mest flaut du har gjort foran en du var forelsket i?",
+            "Hvilken film har du sett flest ganger i skjul?",
+            "Hva er din merkeligste uvane når du er alene?",
+            "Har du noen gang stjålet noe, uansett hvor lite det var?",
+            "Hva er den dummeste grunnen til at du har kranglet med noen?",
+            "Hvem sin stil her inne misunner du mest?",
+            "Hvis du kunne vært usynlig for en dag, hva ville du gjort?",
+            "Hva er det verste måltidet du noensinne har laget til noen andre?",
+            "Har du noen gang blitt tatt i å snakke med deg selv i speilet?",
+            "Hva er din aller største 'guilty pleasure' på TV?",
+            "Hvem av personene i rommet ville vært verst å sitte fast i en heis med?"
         ],
         spicy: [
             "Hvem i rommet har du hatt et godt øye til i skjul?",
             "Hva er det drøyeste du noen gang har gjort på en fest?",
             "Har du noen gang sniklest andres meldinger? Hvem sine?",
             "Hvem i rommet tror du har den mørkeste søkehistorikken?",
-            "Hva er en hemmelighet du aldri har fortalt til noen i dette rommet?",
-            "Har du noen gang sendt en flørtende melding til feil person? Fortell!"
+            "Har du noen gang sendt en flørtende melding til feil person? Fortell!",
+            "Hva er din verste eller pinligste date-opplevelse noensinne?",
+            "Hvem i dette rommet ville du helst vært fanget på en øde øy med, romantisk sett?",
+            "Hva er det mest ulovlige du noen gang har gjort (uten å bli tatt)?",
+            "Hva er den største aldersforskjellen mellom deg og noen du har datet/holdt på med?",
+            "Hvem i rommet har de mest irriterende vanene, og hva er de?",
+            "Har du noen gang kysset noen i dette rommet? (Hold det hemmelig eller avslør hvem).",
+            "Har du noen gang ghostet noen fordi du fant noen bedre?",
+            "Hva er ditt hemmelige partytriks for å sjekke opp noen på byen?",
+            "Nevn én ting du har gjort dritings, som du angrer dypt på i edru tilstand.",
+            "Hvilken kjendis ville du krevd et 'frikort' for i et parforhold?",
+            "Hva er den mest upassende tanken du har hatt i løpet av det siste døgnet?"
         ]
     },
     todDare: {
@@ -40,17 +68,47 @@ const gameData = {
             "Snakk med en overdreven, oppdiktet dialekt i de neste 3 rundene.",
             "La gruppen style håret ditt slik de vil, og behold det slik resten av spillet.",
             "Gjenskap din favoritt-emoji med ansiktet og kroppen, og hold posituren i 10 sekunder.",
-            "Stå på ett bein de neste to rundene. Hvis du faller, må du ta en ny nødt."
+            "Stå på ett bein de neste to rundene. Hvis du faller, må du ta en ny nødt.",
+            "Syng alt du sier de neste to rundene. Ingen vanlig snakking lov!",
+            "Mime en scene fra en kjent film helt til noen gjetter den.",
+            "Gå ut av rommet, kom inn igjen og gjør din mest dramatiske entré noensinne.",
+            "Prøv å sleike albuen din foran alle.",
+            "Spis en teskje med noe fra kjøleskapet som gruppen velger (ketchup, sennep, etc.).",
+            "La spilleren overfor deg tegne noe i ansiktet ditt med en penn eller sminke.",
+            "Snurr rundt 10 ganger og prøv deretter å gå i en rett linje.",
+            "Fortell din beste pappavits. Hvis ingen ler, må du ta en straff.",
+            "Bytt sokker med personen til venstre for deg for resten av spillet.",
+            "Oppfør deg som en robot hver gang det er din tur, til spillet er over.",
+            "La de andre spillerne stille deg et 'ja eller nei'-spørsmål som du MÅ svare ærlig på.",
+            "Gjeip og lag det styggeste ansiktet du klarer til hver person i rommet en etter en.",
+            "Bjeff som en hund hver gang noen sier navnet ditt i de neste 3 rundene.",
+            "Legg deg på gulvet og rull tvers over rommet som en tømmerstokk.",
+            "Gi telefonen din til personen til venstre og la dem like 3 tilfeldige innlegg på Instagram for deg."
         ],
         spicy: [
             "La personen til venstre for deg sende en valgfri emoji til den siste du tekstet med.",
             "Gi telefonen din til spilleren overfor deg og la dem se på bildene dine i 30 sekunder.",
             "La personen til høyre for deg skrive en statusoppdatering på dine sosiale medier.",
             "Ring en tilfeldig kontakt i telefonboken og syng 'Gratulerer med dagen' til dem.",
-            "Vis gruppen det sistet bildet du lagret på kamerarullen din, uansett hva det er."
+            "Vis gruppen det aller siste bildet du lagret/tok på kamerarullen din, uansett hva det er.",
+            "Lukk øynene og la gruppen mate deg med noe ukjent fra kjøkkenet.",
+            "Vis den siste meldingen du sendte til eksen din, eller til en du nylig flørtet med.",
+            "Spill ut hvordan du tror personen til høyre for deg er når de prøver å sjekke opp noen.",
+            "Send en SMS til din tredje mest nylige kontakt og skriv 'Jeg vet hva du gjorde'.",
+            "La personen til venstre for deg se gjennom nettleserhistorikken din i 1 minutt.",
+            "Sitt på fanget til personen overfor deg helt til det er din tur igjen.",
+            "Hold hender med personen til høyre for deg de neste 3 rundene uten å slippe.",
+            "Vis gruppen din aller mest pinlige eller stygge selfie du har på telefonen.",
+            "Les høyt de tre siste meldingene i din mest aktive gruppechat.",
+            "Send en DM til din 'celebrity crush' på Instagram og si at du er ulykkelig forelsket i dem.",
+            "Dans forførende (uten musikk) i 30 sekunder foran gruppen.",
+            "Vis gruppen nøyaktig hva du har i bankkonto-saldoen din akkurat nå.",
+            "Gå inn i kamerarullen din, scroll i blinde, og vis bildet du lander på.",
+            "Bytt et klesplagg med spilleren til venstre."
         ]
     },
-
+    
+    // --- WOULD YOU RATHER DATA ---
     wyr: [
         { opt1: "Alltid ha en stein i skoen", opt2: "Alltid ha våte sokker" },
         { opt1: "Kunne fly (men maks 1 meter over bakken)", opt2: "Være usynlig (men bare når ingen ser på deg)" },
@@ -58,6 +116,8 @@ const gameData = {
         { opt1: "Spise pizza med ananas resten av livet", opt2: "Aldri spise pizza igjen" },
         { opt1: "Ha fingre som ben", opt2: "Ha ben som fingre" }
     ],
+    
+    // --- TRIVIA DATA ---
     trivia: [
         { q: "Hvilken planet er nærmest solen?", a: "Merkur" },
         { q: "Hvor mange hjerter har en blekksprut?", a: "Tre" },
@@ -182,61 +242,127 @@ function getRandomItem(array) {
 
 
 // ==========================================
-// 5. SPILL: IMPOSTER
+// 5. SPILL: IMPOSTER (Oppdatert)
 // ==========================================
-let imposterState = { currentPlayerIndex: 0, roles: [] };
+let imposterState = { 
+    currentPlayerIndex: 0, 
+    roles: [],
+    timerInterval: null,
+    timeLeft: 300 // 5 minutter i sekunder
+};
+
+const imposterSetup = document.getElementById('imposter-setup-view');
+const imposterPlay = document.getElementById('imposter-play-view');
+const imposterTimerView = document.getElementById('imposter-timer-view');
+const flipCard = document.getElementById('imposter-flip-card');
+const btnImposterNext = document.getElementById('btn-imposter-next');
+const imposterRoleText = document.getElementById('imposter-role-text');
 
 function initImposter() {
-    document.getElementById('imposter-setup-view').classList.remove('hidden');
-    document.getElementById('imposter-play-view').classList.add('hidden');
+    // Nullstill views
+    imposterSetup.classList.remove('hidden');
+    imposterPlay.classList.add('hidden');
+    imposterTimerView.classList.add('hidden');
+    
+    // Vis alle mulige lokasjoner i UI så Imposteren kan pugge litt
+    document.getElementById('imposter-location-list').innerText = gameData.imposterLocations.join(" • ");
+    
+    // Stopp eventuell timer
+    clearInterval(imposterState.timerInterval);
+    imposterState.timerInterval = null;
+    imposterState.timeLeft = 300;
 }
 
 document.getElementById('btn-imposter-start').addEventListener('click', () => {
-    // Generer roller
+    if (players.length < 3) {
+        alert("Imposter krever minst 3 spillere!");
+        return;
+    }
+
     const location = getRandomItem(gameData.imposterLocations);
     const imposterIndex = Math.floor(Math.random() * players.length);
     
     imposterState.roles = players.map((player, i) => {
-        return { name: player, role: i === imposterIndex ? 'Du er IMPOSTER!' : `Sted: ${location}` };
+        if (i === imposterIndex) {
+            return { name: player, isImposter: true, text: `<span class="imposter-red">Du er IMPOSTER!</span><br><br><span class="small-text">Prøv å gjett hvor dere er basert på spørsmålene de andre stiller.</span>` };
+        } else {
+            return { name: player, isImposter: false, text: `Stedet er:<br><span class="imposter-green" style="font-size: 1.5rem; font-weight: bold;">${location}</span><br><br><span class="small-text">Avslør Imposteren!</span>` };
+        }
     });
     
-    // Shuffle arrayet slik at turn-ordenen er tilfeldig (valgfritt, men gøy)
     imposterState.roles.sort(() => Math.random() - 0.5);
     imposterState.currentPlayerIndex = 0;
 
-    document.getElementById('imposter-setup-view').classList.add('hidden');
-    document.getElementById('imposter-play-view').classList.remove('hidden');
+    imposterSetup.classList.add('hidden');
+    imposterPlay.classList.remove('hidden');
     updateImposterTurn();
 });
 
 function updateImposterTurn() {
+    // Sørg for at kortet alltid er skjult når det gis til neste spiller
+    flipCard.classList.remove('flipped');
+    btnImposterNext.classList.add('hidden');
+
     if (imposterState.currentPlayerIndex >= imposterState.roles.length) {
-        // Alle har sett rollen sin
-        document.getElementById('imposter-play-view').classList.add('hidden');
-        document.getElementById('imposter-setup-view').classList.remove('hidden');
-        alert("Alle har sett rollene sine. Diskuter og finn Imposteren!");
+        startImposterTimerPhase();
         return;
     }
 
     const currentPlayer = imposterState.roles[imposterState.currentPlayerIndex];
     document.getElementById('imposter-turn-text').innerText = `Gi telefonen til ${currentPlayer.name}`;
-    document.getElementById('btn-imposter-reveal').classList.remove('hidden');
-    document.getElementById('imposter-role-display').classList.add('hidden');
+    imposterRoleText.innerHTML = currentPlayer.text;
 }
 
-document.getElementById('btn-imposter-reveal').addEventListener('click', () => {
-    const role = imposterState.roles[imposterState.currentPlayerIndex].role;
-    document.getElementById('imposter-role-text').innerText = role;
-    
-    document.getElementById('btn-imposter-reveal').classList.add('hidden');
-    document.getElementById('imposter-role-display').classList.remove('hidden');
+// Snu-kortet logikk
+flipCard.addEventListener('click', () => {
+    if (!flipCard.classList.contains('flipped')) {
+        flipCard.classList.add('flipped');
+        btnImposterNext.classList.remove('hidden');
+    }
 });
 
-document.getElementById('btn-imposter-next').addEventListener('click', () => {
+btnImposterNext.addEventListener('click', () => {
     imposterState.currentPlayerIndex++;
     updateImposterTurn();
 });
 
+// Timer Logikk
+function startImposterTimerPhase() {
+    imposterPlay.classList.add('hidden');
+    imposterTimerView.classList.remove('hidden');
+    updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(imposterState.timeLeft / 60);
+    const seconds = imposterState.timeLeft % 60;
+    document.getElementById('imposter-timer').innerText = 
+        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+document.getElementById('btn-imposter-timer-toggle').addEventListener('click', (e) => {
+    if (imposterState.timerInterval) {
+        // Sett på pause
+        clearInterval(imposterState.timerInterval);
+        imposterState.timerInterval = null;
+        e.target.innerText = "Start";
+        e.target.classList.replace('btn-warning', 'btn-success');
+    } else {
+        // Start
+        e.target.innerText = "Pause";
+        e.target.classList.replace('btn-success', 'btn-warning');
+        imposterState.timerInterval = setInterval(() => {
+            imposterState.timeLeft--;
+            updateTimerDisplay();
+            if (imposterState.timeLeft <= 0) {
+                clearInterval(imposterState.timerInterval);
+                document.getElementById('imposter-timer').innerText = "TIDEN ER UTE!";
+            }
+        }, 1000);
+    }
+});
+
+document.getElementById('btn-imposter-end').addEventListener('click', initImposter);
 
 // ==========================================
 // 6. SPILL: NØDT ELLER SANNHET (Oppdatert)
